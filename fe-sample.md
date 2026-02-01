@@ -1,16 +1,16 @@
-{
+payload_canvas : {
   "nodes": [
-    { "data": { "table_id": 1 } },
-    { "data": { "table_id": 2 } }
+    { "data": { "table_id": t1 } },
+    { "data": { "table_id": t2 } }
   ],
   "edges": [
     {
-      "target": 2,
+      "target": t2,
       "data": {
-        "joinType": "LEFT",
-        "on": "users.id = orders.user_id"
+        "joinType": "Right",
+        "on": "users.id = orders.table_id"
       }
     }
   ],
-  "selectedColumns": ["users.name", "orders.amount"]
+  "selectedColumns": ["users.name", "users.amount"]
 }

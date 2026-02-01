@@ -7,6 +7,7 @@ from services.query_executor import execute_sql
 from services.saved_query_service import save_query, get_saved_queries
 from utils.sql_sanitizer import is_safe_sql
 
+# FLask server initalization
 app = Flask(__name__)
 CORS(app)
 
@@ -26,8 +27,9 @@ def columns(table_id):
 
 @app.route("/api/query/generate", methods=["POST"])
 def generate_query():
-    canvas = request.json
+    canvas = request.json("canvas")
     sql = build_sql_from_canvas(canvas)
+    # hive.execute(sql)
     return jsonify({"sql": sql})
 
 
@@ -35,7 +37,9 @@ def generate_query():
 def execute_query():
     sql = request.json.get("sql")
     if not is_safe_sql(sql):
+        # false
         return jsonify({"error": "Unsafe SQL detected"}), 400
+    # true
     return jsonify(execute_sql(sql))
 
 
@@ -51,6 +55,17 @@ def save_sql():
     )
     return jsonify({"message": "Query saved"})
 
+# Hive Execute (endpoints)
+
+# RBAC-Role based access control 
+
+# endpoint(/delete) 
+# Admin function
+# function 
+# def sample_delete():
+    # check--access
+        # return false
+    # return jsonify(delete())
 
 @app.route("/api/saved-query", methods=["GET"])
 def list_saved():
@@ -63,5 +78,5 @@ def health_check():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0',port='6969')
 
