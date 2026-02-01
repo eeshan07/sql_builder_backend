@@ -57,5 +57,11 @@ def list_saved():
     return jsonify(get_saved_queries())
 
 
+@app.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"Status":"Shivin"})
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')
+
